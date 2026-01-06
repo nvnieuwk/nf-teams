@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, Seqera Labs
+ * Copyright 2025, Nicolas Vannieuwkerke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,25 +17,16 @@
 package nvnieuwk.plugin
 
 import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
-import nextflow.Session
-import nextflow.trace.TraceObserver
+import nextflow.plugin.BasePlugin
+import org.pf4j.PluginWrapper
 
 /**
- * Implements an observer that allows implementing custom
- * logic on nextflow execution events.
+ * The plugin entry point
  */
-@Slf4j
 @CompileStatic
-class TeamsObserver implements TraceObserver {
+class TeamsPlugin extends BasePlugin {
 
-    @Override
-    void onFlowCreate(Session session) {
-        println "Pipeline is starting! 🚀"
-    }
-
-    @Override
-    void onFlowComplete() {
-        println "Pipeline complete! 👋"
+    TeamsPlugin(PluginWrapper wrapper) {
+        super(wrapper)
     }
 }
