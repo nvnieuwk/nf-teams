@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package nvnieuwk.plugin
+package nvnieuwk.teams
 
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import nextflow.Session
 import nextflow.trace.TraceObserver
+import nvnieuwk.teams.configuration.TeamsConfiguration
 
 /**
  * Implements an observer that allows implementing custom
@@ -29,13 +30,22 @@ import nextflow.trace.TraceObserver
 @CompileStatic
 class TeamsObserver implements TraceObserver {
 
+    private final TeamsConfiguration config
+    private TeamsHookEngine hookEngine
+
+    TeamsObserver(TeamsConfiguration config) {
+        log.debug("TeamsObserver created with webhook URL: ${config.webHook.url}")
+        this.config = config
+        this.hookEngine = new TeamsHookEngine(config)
+    }
+
     @Override
     void onFlowCreate(Session session) {
-        println "Pipeline is starting! 🚀"
+        hookEngine.sendMessage("Pipeline started! 🚀")
     }
 
     @Override
     void onFlowComplete() {
-        println "Pipeline complete! 👋"
+        hookEngine.sendMessage("Pipeline complete! 👋")
     }
 }

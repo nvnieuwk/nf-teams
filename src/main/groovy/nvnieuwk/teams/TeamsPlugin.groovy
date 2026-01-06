@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nvnieuwk.plugin
+package nvnieuwk.teams
 
 import groovy.transform.CompileStatic
 import nextflow.plugin.BasePlugin

@@ -8,10 +8,10 @@ nextflowPlugin {
     nextflowVersion = '24.10.0'
 
     provider = 'nvnieuwk'
-    className = 'nvnieuwk.plugin.TeamsPlugin'
+    className = 'nvnieuwk.teams.TeamsPlugin'
     extensionPoints = [
-        'nvnieuwk.plugin.TeamsExtension',
-        'nvnieuwk.plugin.TeamsFactory'
+        'nvnieuwk.teams.TeamsExtension',
+        'nvnieuwk.teams.TeamsFactory'
     ]
 
 }

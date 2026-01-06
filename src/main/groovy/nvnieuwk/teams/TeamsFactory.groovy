@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package nvnieuwk.plugin
+package nvnieuwk.teams
 
 import groovy.transform.CompileStatic
 import nextflow.Session
 import nextflow.trace.TraceObserver
 import nextflow.trace.TraceObserverFactory
+import nvnieuwk.teams.configuration.TeamsConfiguration
 
 /**
  * Implements a factory object required to create
@@ -30,7 +31,8 @@ class TeamsFactory implements TraceObserverFactory {
 
     @Override
     Collection<TraceObserver> create(Session session) {
-        return List.<TraceObserver>of(new TeamsObserver())
+        def TeamsConfiguration config = new TeamsConfiguration(session.config.navigate("teams") as Map<String, Object>)
+        return List.<TraceObserver>of(new TeamsObserver(config))
     }
 
 }
