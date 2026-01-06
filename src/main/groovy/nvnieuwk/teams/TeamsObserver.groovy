@@ -41,11 +41,11 @@ class TeamsObserver implements TraceObserver {
 
     @Override
     void onFlowCreate(Session session) {
-        hookEngine.sendMessage("Pipeline started! 🚀")
+        hookEngine.sendMessage(session)
     }
 
     @Override
     void onFlowComplete() {
-        hookEngine.sendMessage("Pipeline complete! 👋")
+        // hookEngine.sendMessage(session)
     }
 }
