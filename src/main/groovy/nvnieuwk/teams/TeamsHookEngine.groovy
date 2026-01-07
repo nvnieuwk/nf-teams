@@ -30,7 +30,7 @@ class TeamsHookEngine {
         postToHook(renderTemplate(template, msg_fields))
     }
 
-    public void sendCompleteMessage(Session session, File template) {
+    public void sendSuccessMessage(Session session, File template) {
         log.info("Sending message to Teams webhook (${url})")
 
         Map<String,Object> msg_fields = [

@@ -34,29 +34,25 @@ class TeamsObserver implements TraceObserver {
 
     private TeamsConfiguration config
     private TeamsHookEngine hookEngine
-    private Session startSession
+    private Session session
 
     @Override
     void onFlowCreate(Session session) {
         this.config = new TeamsConfiguration(session.config.navigate("teams") as Map<String, Object>)
         this.hookEngine = new TeamsHookEngine(config)
-        this.startSession = session
+        this.session = session
         log.debug("TeamsObserver created with webhook URL: ${config.webHook.url}")
-    }
-
-    @Override
-    void onFlowBegin() {
         if (config.onStart.enabled) {
             log.info("Sending Teams notification on workflow start")
-            hookEngine.sendStartMessage(startSession, config.onStart.template)
+            hookEngine.sendStartMessage(session, config.onStart.template)
         }
     }
 
     @Override
     void onFlowComplete() {
-        if (config.onComplete.enabled) {
+        if (config.onSuccess.enabled && session?.workflowMetadata.success) {
             log.info("Sending Teams notification on workflow completion")
-            hookEngine.sendCompleteMessage(startSession, config.onComplete.template)
+            hookEngine.sendSuccessMessage(session, config.onSuccess.template)
         }
     }
 
@@ -64,7 +60,7 @@ class TeamsObserver implements TraceObserver {
     void onFlowError(TaskHandler handler, TraceRecord trace) {
         if (config.onError.enabled) {
             log.info("Sending Teams notification on workflow error")
-            hookEngine.sendErrorMessage(startSession, config.onError.template, handler, trace)
+            hookEngine.sendErrorMessage(session, config.onError.template, handler, trace)
         }
     }
 }

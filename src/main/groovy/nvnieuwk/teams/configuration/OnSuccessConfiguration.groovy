@@ -5,11 +5,11 @@ import nextflow.config.spec.ConfigScope
 import nextflow.config.spec.ScopeName
 import nextflow.script.dsl.Description
 
-@ScopeName('onComplete')
+@ScopeName('onSuccess')
 @Description('''
-    The 'onComplete' scope allows you to configure what happens when a Nextflow workflow completes successfully.
+    The 'onSuccess' scope allows you to configure what happens when a Nextflow workflow completes successfully.
 ''')
-class OnCompleteConfiguration implements ConfigScope {
+class OnSuccessConfiguration implements ConfigScope {
 
     @ConfigOption
     @Description('''
@@ -19,16 +19,16 @@ class OnCompleteConfiguration implements ConfigScope {
 
     @ConfigOption
     @Description('''
-        The JSON template file used to format the Teams message upon workflow completion.
+        The JSON template file used to format the Teams message upon successful workflow completion.
     ''')
     File template
 
-    OnCompleteConfiguration(Map<String,Object> configMap = [:]) {
+    OnSuccessConfiguration(Map<String,Object> configMap = [:]) {
         enabled = configMap.enabled ?: false
         if (configMap.template) {
             template = new File(configMap.template)
         } else {
-            template = new File(getClass().getResource("/completeTemplate.json").toURI())
+            template = new File(getClass().getResource("/successTemplate.json").toURI())
         }
     }
 }
