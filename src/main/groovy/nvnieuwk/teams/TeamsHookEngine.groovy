@@ -1,9 +1,9 @@
 package nvnieuwk.teams
 
 import groovy.util.logging.Slf4j
-
+import groovy.text.GStringTemplateEngine
 import nextflow.Session
-
+import nextflow.script.WorkflowMetadata
 import nvnieuwk.teams.configuration.TeamsConfiguration
 
 
@@ -17,21 +17,12 @@ class TeamsHookEngine {
         this.url = config.webHook.url
     }
 
-    public void sendMessage(Session session) {
+    public void sendStartupMessage(Session session, String message) {
         log.info("Sending message to Teams webhook (${url})")
-        def workflow = session.workflowMetadata
-        def summary = [:]
-        // def summary_params = session.params
-        // summary_params
-        //     .keySet()
-        //     .sort()
-        //     .each { group ->
-        //         summary << summary_params[group]
-        //     }
+        WorkflowMetadata workflow = session.workflowMetadata
 
-        def misc_fields = [:]
+        Map<String,Object> misc_fields = [:]
         misc_fields['start']          = workflow.start
-        misc_fields['complete']       = workflow.complete
         misc_fields['scriptfile']     = workflow.scriptFile
         misc_fields['scriptid']       = workflow.scriptId
         if (workflow.repository) {
@@ -47,33 +38,29 @@ class TeamsHookEngine {
         misc_fields['nxf_build']      = workflow.nextflow.build
         misc_fields['nxf_timestamp']  = workflow.nextflow.timestamp
 
-        def msg_fields = [:]
-        msg_fields['version']      = session.manifest.version
+        Map<String,Object> msg_fields = [:]
+        msg_fields['version']       = session.manifest.version
         msg_fields['pipeline_name'] = workflow.manifest.name
-        msg_fields['runName']      = workflow.runName
-        msg_fields['success']      = workflow.success
-        msg_fields['dateComplete'] = workflow.complete
-        msg_fields['duration']     = workflow.duration
-        msg_fields['exitStatus']   = workflow.exitStatus
-        msg_fields['errorMessage'] = (workflow.errorMessage ?: 'None')
-        msg_fields['errorReport']  = (workflow.errorReport ?: 'None')
-        msg_fields['commandLine']  = workflow.commandLine
-        msg_fields['projectDir']   = workflow.projectDir
-        msg_fields['summary']      = summary << misc_fields
+        msg_fields['runName']       = workflow.runName
+        msg_fields['customMessage'] = message
+        msg_fields['dateStarted']   = workflow.start
+        msg_fields['commandLine']   = workflow.commandLine
+        msg_fields['summary']       = misc_fields
 
         // Render the JSON template
-        def engine       = new groovy.text.GStringTemplateEngine()
-        // Defaults to "Adaptive Cards" (https://adaptivecards.io), except Slack which has its own format
-        def hf            = new File(getClass().getResource("/template.json").toURI())
-        def json_template = engine.createTemplate(hf).make(msg_fields)
-        def json_message  = json_template.toString()
+        GStringTemplateEngine engine = new GStringTemplateEngine()
+        // Uses to "Adaptive Cards" (https://adaptivecards.io)
+        File template = new File(getClass().getResource("/startTemplate.json").toURI())
+        String json_message = engine.createTemplate(template).make(msg_fields).toString()
+        postToHook(json_message)
+    }
 
-
+    private void postToHook(String message) {
         def post = new URL(url).openConnection()
         post.setRequestMethod("POST")
         post.setDoOutput(true)
         post.setRequestProperty("Content-Type", "application/json")
-        post.getOutputStream().write(json_message.getBytes("UTF-8"))
+        post.getOutputStream().write(message.getBytes("UTF-8"))
         def postRC = post.getResponseCode()
         if (!postRC.equals(200)) {
             log.warn(post.getErrorStream().getText())

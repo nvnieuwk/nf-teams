@@ -41,7 +41,9 @@ class TeamsObserver implements TraceObserver {
 
     @Override
     void onFlowCreate(Session session) {
-        hookEngine.sendMessage(session)
+        if (config.onStart.enabled) {
+            hookEngine.sendStartupMessage(session, config.onStart.message)
+        }
     }
 
     @Override

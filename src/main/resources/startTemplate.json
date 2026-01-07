@@ -16,20 +16,20 @@
                         "type": "TextBlock",
                         "size": "Large",
                         "weight": "Bolder",
-                        "color": "<% if (success) { %>Good<% } else { %>Attention<%} %>",
-                        "text": "${pipeline_name} v${version} - ${runName}",
+                        "color": "good",
+                        "text": "Started: ${pipeline_name} v${version} - ${runName}",
                         "wrap": true
                     },
                     {
                         "type": "TextBlock",
                         "spacing": "None",
-                        "text": "Completed at ${dateComplete} (duration: ${duration})",
+                        "text": "Started on ${dateStarted}",
                         "isSubtle": true,
                         "wrap": true
                     },
                     {
                         "type": "TextBlock",
-                        "text": "<% if (success) { %>Pipeline completed successfully!<% } else { %>Pipeline completed with errors. The full error message was: ${errorReport}.<% } %>",
+                        "text": "${customMessage}",
                         "wrap": true
                     },
                     {
