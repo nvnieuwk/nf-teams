@@ -16,20 +16,14 @@
                         "type": "TextBlock",
                         "size": "Large",
                         "weight": "Bolder",
-                        "color": "good",
-                        "text": "Started: ${pipeline_name} v${version} - ${runName}",
+                        "text": "Started: ${session.manifest.name} v${session.manifest.version} - ${session.workflowMetadata.runName}",
                         "wrap": true
                     },
                     {
                         "type": "TextBlock",
                         "spacing": "None",
-                        "text": "Started on ${dateStarted}",
+                        "text": "Started on ${session.workflowMetadata.start}",
                         "isSubtle": true,
-                        "wrap": true
-                    },
-                    {
-                        "type": "TextBlock",
-                        "text": "${customMessage}",
                         "wrap": true
                     },
                     {
@@ -39,7 +33,7 @@
                     },
                     {
                         "type": "TextBlock",
-                        "text": "${commandLine}",
+                        "text": "${session.workflowMetadata.commandLine}",
                         "isSubtle": true,
                         "wrap": true
                     }
@@ -54,7 +48,16 @@
                             "body": [
                                 {
                                     "type": "FactSet",
-                                    "facts": [<% out << summary.collect{ k,v -> "{\"title\": \"$k\", \"value\" : \"$v\"}"}.join(",\n") %>
+                                    "facts": [
+                                        {"title": "Pipeline start", "value":"${session.workflowMetadata.start}"},
+                                        {"title": "Script file", "value":"${session.workflowMetadata.scriptFile}"},
+                                        {"title": "Script ID", "value":"${session.workflowMetadata.scriptId}"},
+                                        {"title": "Repository", "value":"${session.workflowMetadata.repository}"},
+                                        {"title": "Revision", "value":"${session.workflowMetadata.revision}"},
+                                        {"title": "Commit ID", "value":"${session.workflowMetadata.commitId}"},
+                                        {"title": "Nextflow version", "value":"${session.workflowMetadata.nextflow.version}"},
+                                        {"title": "Nextflow build", "value":"${session.workflowMetadata.nextflow.build}"},
+                                        {"title": "Nextflow timestamp", "value":"${session.workflowMetadata.nextflow.timestamp}"}
                                     ]
                                 }
                             ]

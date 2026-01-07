@@ -30,19 +30,23 @@ import nvnieuwk.teams.configuration.TeamsConfiguration
 @CompileStatic
 class TeamsObserver implements TraceObserver {
 
-    private final TeamsConfiguration config
+    private TeamsConfiguration config
     private TeamsHookEngine hookEngine
-
-    TeamsObserver(TeamsConfiguration config) {
-        log.debug("TeamsObserver created with webhook URL: ${config.webHook.url}")
-        this.config = config
-        this.hookEngine = new TeamsHookEngine(config)
-    }
+    private Session startSession
 
     @Override
     void onFlowCreate(Session session) {
+        this.config = new TeamsConfiguration(session.config.navigate("teams") as Map<String, Object>)
+        this.hookEngine = new TeamsHookEngine(config)
+        this.startSession = session
+        log.debug("TeamsObserver created with webhook URL: ${config.webHook.url}")
+    }
+
+    @Override
+    void onFlowBegin() {
         if (config.onStart.enabled) {
-            hookEngine.sendStartupMessage(session, config.onStart.message)
+            log.info("Sending Teams notification on workflow start")
+            hookEngine.sendMessage(startSession, config.onStart.template)
         }
     }
 
