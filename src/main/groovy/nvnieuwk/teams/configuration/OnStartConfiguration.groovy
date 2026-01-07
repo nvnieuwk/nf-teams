@@ -1,7 +1,26 @@
 package nvnieuwk.teams.configuration
 
-class OnStartConfiguration {
+import nextflow.config.spec.ConfigOption
+import nextflow.config.spec.ConfigScope
+import nextflow.config.spec.ScopeName
+import nextflow.script.dsl.Description
+
+@ScopeName('onStart')
+@Description('''
+    The 'onStart' scope allows you to configure what happens when a Nextflow workflow starts.
+''')
+class OnStartConfiguration implements ConfigScope {
+
+    @ConfigOption
+    @Description('''
+        Enable or disable sending a Teams message when the workflow starts.
+    ''')
     Boolean enabled
+
+    @ConfigOption
+    @Description('''
+        The JSON template file used to format the Teams message upon workflow start.
+    ''')
     File template
 
     OnStartConfiguration(Map<String,Object> configMap = [:]) {
