@@ -16,14 +16,26 @@
                         "type": "TextBlock",
                         "size": "Large",
                         "weight": "Bolder",
-                        "text": "Started: ${session.manifest.name} ${session.manifest.version} - ${session.workflowMetadata.runName}",
+                        "color": "attention",
+                        "text": "Failed: ${session.manifest.name} v${session.manifest.version} - ${session.workflowMetadata.runName}",
                         "wrap": true
                     },
                     {
                         "type": "TextBlock",
                         "spacing": "None",
-                        "text": "Started on ${session.workflowMetadata.start}",
+                        "text": "Failed on ${session.workflowMetadata.complete} (${session.workflowMetadata.duration})",
                         "isSubtle": true,
+                        "wrap": true
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "The pipeline failed because of the following issue:",
+                        "wrap": true
+                    },
+                    {
+                        "type": "TextBlock",
+                        "color": "attention",
+                        "text": "${session.workflowMetadata.errorMessage}",
                         "wrap": true
                     },
                     {
@@ -50,6 +62,7 @@
                                     "type": "FactSet",
                                     "facts": [
                                         {"title": "Pipeline start", "value":"${session.workflowMetadata.start}"},
+                                        {"title": "Pipeline end", "value":"${session.workflowMetadata.complete}"},
                                         {"title": "Script file", "value":"${session.workflowMetadata.scriptFile}"},
                                         {"title": "Script ID", "value":"${session.workflowMetadata.scriptId}"},
                                         {"title": "Repository", "value":"${session.workflowMetadata.repository}"},

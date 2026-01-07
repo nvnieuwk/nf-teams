@@ -16,13 +16,14 @@
                         "type": "TextBlock",
                         "size": "Large",
                         "weight": "Bolder",
-                        "text": "Started: ${session.manifest.name} ${session.manifest.version} - ${session.workflowMetadata.runName}",
+                        "color": "good",
+                        "text": "Completed: ${session.manifest.name} v${session.manifest.version} - ${session.workflowMetadata.runName}",
                         "wrap": true
                     },
                     {
                         "type": "TextBlock",
                         "spacing": "None",
-                        "text": "Started on ${session.workflowMetadata.start}",
+                        "text": "Completed on ${session.workflowMetadata.complete} (${session.workflowMetadata.duration})",
                         "isSubtle": true,
                         "wrap": true
                     },
@@ -50,6 +51,7 @@
                                     "type": "FactSet",
                                     "facts": [
                                         {"title": "Pipeline start", "value":"${session.workflowMetadata.start}"},
+                                        {"title": "Pipeline end", "value":"${session.workflowMetadata.complete}"},
                                         {"title": "Script file", "value":"${session.workflowMetadata.scriptFile}"},
                                         {"title": "Script ID", "value":"${session.workflowMetadata.scriptId}"},
                                         {"title": "Repository", "value":"${session.workflowMetadata.repository}"},

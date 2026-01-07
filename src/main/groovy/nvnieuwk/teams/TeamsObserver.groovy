@@ -20,6 +20,8 @@ import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import nextflow.Session
 import nextflow.trace.TraceObserver
+import nextflow.processor.TaskHandler
+import nextflow.trace.TraceRecord
 import nvnieuwk.teams.configuration.TeamsConfiguration
 
 /**
@@ -46,12 +48,23 @@ class TeamsObserver implements TraceObserver {
     void onFlowBegin() {
         if (config.onStart.enabled) {
             log.info("Sending Teams notification on workflow start")
-            hookEngine.sendMessage(startSession, config.onStart.template)
+            hookEngine.sendStartMessage(startSession, config.onStart.template)
         }
     }
 
     @Override
     void onFlowComplete() {
-        // hookEngine.sendMessage(session)
+        if (config.onComplete.enabled) {
+            log.info("Sending Teams notification on workflow completion")
+            hookEngine.sendCompleteMessage(startSession, config.onComplete.template)
+        }
+    }
+
+    @Override
+    void onFlowError(TaskHandler handler, TraceRecord trace) {
+        if (config.onError.enabled) {
+            log.info("Sending Teams notification on workflow error")
+            hookEngine.sendErrorMessage(startSession, config.onError.template, handler, trace)
+        }
     }
 }

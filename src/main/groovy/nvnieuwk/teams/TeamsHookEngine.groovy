@@ -1,9 +1,12 @@
 package nvnieuwk.teams
 
+import java.time.OffsetDateTime
 import groovy.util.logging.Slf4j
 import groovy.text.GStringTemplateEngine
 import nextflow.Session
 import nextflow.script.WorkflowMetadata
+import nextflow.processor.TaskHandler
+import nextflow.trace.TraceRecord
 import nvnieuwk.teams.configuration.TeamsConfiguration
 
 
@@ -17,17 +20,34 @@ class TeamsHookEngine {
         this.url = config.webHook.url
     }
 
-    public void sendMessage(Session session, File template) {
+    public void sendStartMessage(Session session, File template) {
         log.info("Sending message to Teams webhook (${url})")
 
         Map<String,Object> msg_fields = [
             'session': session
         ]
 
-        // Render the JSON template
-        GStringTemplateEngine engine = new GStringTemplateEngine()
-        String json_message = engine.createTemplate(template).make(msg_fields).toString()
-        postToHook(json_message)
+        postToHook(renderTemplate(template, msg_fields))
+    }
+
+    public void sendCompleteMessage(Session session, File template) {
+        log.info("Sending message to Teams webhook (${url})")
+
+        Map<String,Object> msg_fields = [
+            'session': session
+        ]
+
+        postToHook(renderTemplate(template, msg_fields))
+    }
+
+    public void sendErrorMessage(Session session, File template, TaskHandler handler, TraceRecord trace) {
+        log.info("Sending message to Teams webhook (${url})")
+
+        Map<String,Object> msg_fields = [
+            'session': session
+        ]
+
+        postToHook(renderTemplate(template, msg_fields))
     }
 
     private void postToHook(String message) {
@@ -40,5 +60,10 @@ class TeamsHookEngine {
         if (!postRC.equals(200)) {
             log.warn(post.getErrorStream().getText())
         }
+    }
+
+    private String renderTemplate(File template, Map<String,Object> fields) {
+        GStringTemplateEngine engine = new GStringTemplateEngine()
+        return engine.createTemplate(template).make(fields).toString()
     }
 }
