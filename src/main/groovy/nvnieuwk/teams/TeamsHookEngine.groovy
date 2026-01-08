@@ -5,8 +5,7 @@ import groovy.util.logging.Slf4j
 import groovy.text.GStringTemplateEngine
 import nextflow.Session
 import nextflow.script.WorkflowMetadata
-import nextflow.processor.TaskHandler
-import nextflow.trace.TraceRecord
+import nextflow.trace.event.TaskEvent
 import nvnieuwk.teams.configuration.TeamsConfiguration
 
 
@@ -30,13 +29,12 @@ class TeamsHookEngine {
         postToHook(renderTemplate(template, msg_fields))
     }
 
-    public void sendErrorMessage(Session session, File template, TaskHandler handler, TraceRecord trace) {
+    public void sendErrorMessage(Session session, File template, TaskEvent event) {
         log.info("Sending message to Teams webhook (${url})")
 
         Map<String,Object> msg_fields = [
             'session': session,
-            'handler': handler,
-            'trace': trace
+            'event': event
         ]
 
         postToHook(renderTemplate(template, msg_fields))

@@ -27,7 +27,12 @@
                         "isSubtle": true,
                         "wrap": true
                     },
-                    ${session.workflowMetadata.success ? '' : String.format('''
+                    ${session.workflowMetadata.success ? '''
+                    {
+                        "type": "TextBlock",
+                        "text": "The pipeline completed successfully",
+                        "wrap": true
+                    },''' : String.format('''
                     {
                         "type": "TextBlock",
                         "text": "The pipeline failed because of the following issue:",
@@ -39,11 +44,6 @@
                         "text": "%s",
                         "wrap": true
                     },''', session.workflowMetadata.errorMessage)}
-                    {
-                        "type": "TextBlock",
-                        "text": "The pipeline ${session.workflowMetadata.success ? 'completed successfully' : 'failed'}.",
-                        "wrap": true
-                    },
                     {
                         "type": "TextBlock",
                         "text": "The command used to launch the workflow was as follows:",

@@ -19,9 +19,8 @@ package nvnieuwk.teams
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import nextflow.Session
-import nextflow.trace.TraceObserver
-import nextflow.processor.TaskHandler
-import nextflow.trace.TraceRecord
+import nextflow.trace.TraceObserverV2
+import nextflow.trace.event.TaskEvent
 import nvnieuwk.teams.configuration.TeamsConfiguration
 
 /**
@@ -30,7 +29,7 @@ import nvnieuwk.teams.configuration.TeamsConfiguration
  */
 @Slf4j
 @CompileStatic
-class TeamsObserver implements TraceObserver {
+class TeamsObserver implements TraceObserverV2 {
 
     private TeamsConfiguration config
     private TeamsHookEngine hookEngine
@@ -61,10 +60,10 @@ class TeamsObserver implements TraceObserver {
     }
 
     @Override
-    void onFlowError(TaskHandler handler, TraceRecord trace) {
+    void onFlowError(TaskEvent event) {
         if (config.onError.enabled) {
             log.info("Sending Teams notification on workflow error")
-            hookEngine.sendErrorMessage(session, config.onError.template, handler, trace)
+            hookEngine.sendErrorMessage(session, config.onError.template, event)
         }
     }
 }

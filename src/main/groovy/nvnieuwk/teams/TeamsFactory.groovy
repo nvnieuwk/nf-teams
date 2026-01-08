@@ -18,19 +18,19 @@ package nvnieuwk.teams
 
 import groovy.transform.CompileStatic
 import nextflow.Session
-import nextflow.trace.TraceObserver
-import nextflow.trace.TraceObserverFactory
+import nextflow.trace.TraceObserverV2
+import nextflow.trace.TraceObserverFactoryV2
 
 /**
  * Implements a factory object required to create
  * the {@link TeamsObserver} instance.
  */
 @CompileStatic
-class TeamsFactory implements TraceObserverFactory {
+class TeamsFactory implements TraceObserverFactoryV2 {
 
     @Override
-    Collection<TraceObserver> create(Session session) {
-        return List.<TraceObserver>of(new TeamsObserver())
+    Collection<TraceObserverV2> create(Session session) {
+        return List.<TraceObserverV2>of(new TeamsObserver())
     }
 
 }
