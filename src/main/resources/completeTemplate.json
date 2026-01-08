@@ -16,8 +16,8 @@
                         "type": "TextBlock",
                         "size": "Large",
                         "weight": "Bolder",
-                        "color": "good",
-                        "text": "Success: ${session.manifest.name} ${session.manifest.version} - ${session.workflowMetadata.runName}",
+                        "color": "${session.workflowMetadata.success ? 'good' : 'attention'}",
+                        "text": "Completed: ${session.manifest.name} ${session.manifest.version} - ${session.workflowMetadata.runName}",
                         "wrap": true
                     },
                     {
@@ -25,6 +25,23 @@
                         "spacing": "None",
                         "text": "Completed on ${session.workflowMetadata.complete} (${session.workflowMetadata.duration})",
                         "isSubtle": true,
+                        "wrap": true
+                    },
+                    ${session.workflowMetadata.success ? '' : String.format('''
+                    {
+                        "type": "TextBlock",
+                        "text": "The pipeline failed because of the following issue:",
+                        "wrap": true
+                    },
+                    {
+                        "type": "TextBlock",
+                        "color": "attention",
+                        "text": "%s",
+                        "wrap": true
+                    },''', session.workflowMetadata.errorMessage)}
+                    {
+                        "type": "TextBlock",
+                        "text": "The pipeline ${session.workflowMetadata.success ? 'completed successfully' : 'failed'}.",
                         "wrap": true
                     },
                     {

@@ -40,11 +40,18 @@ class TeamsConfiguration implements ConfigScope {
     ''')
     OnStartConfiguration onStart
 
+    @ConfigOption
+    @Description('''
+        Configuration for notifications when the workflow completes (regardless of success or failure).
+    ''')
+    OnCompleteConfiguration onComplete
+
     TeamsConfiguration(Map<String,Object> configMap = [:]) {
         enabled = configMap.enabled ?: false
         webHook = new WebHookConfiguration(configMap.webHook ?: [:])
         onSuccess = new OnSuccessConfiguration(configMap.onSuccess ?: [:])
         onError = new OnErrorConfiguration(configMap.onError ?: [:])
         onStart = new OnStartConfiguration(configMap.onStart ?: [:])
+        onComplete = new OnCompleteConfiguration(configMap.onComplete ?: [:])
     }
 }

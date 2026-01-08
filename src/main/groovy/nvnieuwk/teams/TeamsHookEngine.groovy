@@ -20,17 +20,7 @@ class TeamsHookEngine {
         this.url = config.webHook.url
     }
 
-    public void sendStartMessage(Session session, File template) {
-        log.info("Sending message to Teams webhook (${url})")
-
-        Map<String,Object> msg_fields = [
-            'session': session
-        ]
-
-        postToHook(renderTemplate(template, msg_fields))
-    }
-
-    public void sendSuccessMessage(Session session, File template) {
+    public void sendStandardMessage(Session session, File template) {
         log.info("Sending message to Teams webhook (${url})")
 
         Map<String,Object> msg_fields = [
@@ -44,7 +34,9 @@ class TeamsHookEngine {
         log.info("Sending message to Teams webhook (${url})")
 
         Map<String,Object> msg_fields = [
-            'session': session
+            'session': session,
+            'handler': handler,
+            'trace': trace
         ]
 
         postToHook(renderTemplate(template, msg_fields))

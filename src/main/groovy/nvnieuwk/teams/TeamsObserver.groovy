@@ -44,15 +44,19 @@ class TeamsObserver implements TraceObserver {
         log.debug("TeamsObserver created with webhook URL: ${config.webHook.url}")
         if (config.onStart.enabled) {
             log.info("Sending Teams notification on workflow start")
-            hookEngine.sendStartMessage(session, config.onStart.template)
+            hookEngine.sendStandardMessage(session, config.onStart.template)
         }
     }
 
     @Override
     void onFlowComplete() {
-        if (config.onSuccess.enabled && session?.workflowMetadata.success) {
+        if (config.onComplete.enabled) {
             log.info("Sending Teams notification on workflow completion")
-            hookEngine.sendSuccessMessage(session, config.onSuccess.template)
+            hookEngine.sendStandardMessage(session, config.onComplete.template)
+        }
+        if (config.onSuccess.enabled && session?.workflowMetadata.success) {
+            log.info("Sending Teams notification on workflow success")
+            hookEngine.sendStandardMessage(session, config.onSuccess.template)
         }
     }
 
