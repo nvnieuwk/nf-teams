@@ -12,3 +12,4 @@ work
 nextflow.config
 results/
 null/
+main.nf

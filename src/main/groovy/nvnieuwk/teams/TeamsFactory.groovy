@@ -30,7 +30,10 @@ class TeamsFactory implements TraceObserverFactoryV2 {
 
     @Override
     Collection<TraceObserverV2> create(Session session) {
-        return List.<TraceObserverV2>of(new TeamsObserver())
+        if (session.config.navigate('teams.enabled')) {
+            return List.<TraceObserverV2>of(new TeamsObserver())
+        }
+        return List.<TraceObserverV2>of()
     }
 
 }
