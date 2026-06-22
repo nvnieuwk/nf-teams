@@ -40,7 +40,7 @@ class TeamsObserver implements TraceObserverV2 {
         this.config = new TeamsConfiguration(session.config.navigate("teams") as Map<String, Object>)
         this.hookEngine = new TeamsHookEngine(config)
         this.session = session
-        log.debug("TeamsObserver created with webhook URL: ${config.webHook.url}")
+        log.debug("TeamsObserver created")
         if (config.onStart.enabled) {
             log.info("Sending Teams notification on workflow start")
             hookEngine.sendStandardMessage(session, config.onStart.template)

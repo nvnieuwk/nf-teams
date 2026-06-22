@@ -20,7 +20,7 @@ class TeamsHookEngine {
     }
 
     public void sendStandardMessage(Session session, File template) {
-        log.info("Sending message to Teams webhook (${url})")
+        log.info("Sending message to Teams webhook")
 
         Map<String,Object> msg_fields = [
             'session': session
@@ -30,7 +30,7 @@ class TeamsHookEngine {
     }
 
     public void sendErrorMessage(Session session, File template, TaskEvent event) {
-        log.info("Sending message to Teams webhook (${url})")
+        log.info("Sending message to Teams webhook")
 
         Map<String,Object> msg_fields = [
             'session': session,
