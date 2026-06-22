@@ -13,3 +13,8 @@ nextflow.config
 results/
 null/
 main.nf
+
+.env
+# pixi environments
+.pixi/*
+!.pixi/config.toml
