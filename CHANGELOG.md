@@ -4,6 +4,7 @@
 
 1. Removed the hook URL from the log messages
 2. Fixed warnings with configuration options
+3. Removed error messages being shown when message has been posted succesfully.
 
 ## 0.1.1
 

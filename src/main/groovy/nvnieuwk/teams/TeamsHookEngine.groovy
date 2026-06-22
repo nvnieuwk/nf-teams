@@ -47,7 +47,7 @@ class TeamsHookEngine {
         post.setRequestProperty("Content-Type", "application/json")
         post.getOutputStream().write(message.getBytes("UTF-8"))
         def postRC = post.getResponseCode()
-        if (!postRC.equals(200)) {
+        if (postRC < 200 || postRC >= 300) {
             log.warn(post.getErrorStream().getText())
         }
     }
