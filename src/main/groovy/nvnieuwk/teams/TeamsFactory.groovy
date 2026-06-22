@@ -16,6 +16,7 @@
 
 package nvnieuwk.teams
 
+import groovy.util.logging.Slf4j
 import groovy.transform.CompileStatic
 import nextflow.Session
 import nextflow.trace.TraceObserverV2
@@ -25,13 +26,20 @@ import nextflow.trace.TraceObserverFactoryV2
  * Implements a factory object required to create
  * the {@link TeamsObserver} instance.
  */
+@Slf4j
 @CompileStatic
 class TeamsFactory implements TraceObserverFactoryV2 {
 
     @Override
     Collection<TraceObserverV2> create(Session session) {
-        if (session.config.navigate('teams.enabled')) {
+        String url = session.config.navigate('teams.webHook.url') as String
+        Boolean isValid = url != null && url ==~ 'https?://.+'
+        Boolean enabled = session.config.navigate('teams.enabled') as Boolean
+        if (enabled && isValid) {
             return List.<TraceObserverV2>of(new TeamsObserver())
+        }
+        if (enabled && !isValid) {
+            log.warn("Microsoft Teams notifications are enabled but the webhook URL is invalid. Please check your configuration.")
         }
         return List.<TraceObserverV2>of()
     }
