@@ -5,10 +5,6 @@ import nextflow.config.spec.ConfigScope
 import nextflow.config.spec.ScopeName
 import nextflow.script.dsl.Description
 
-@ScopeName('onStart')
-@Description('''
-    The 'onStart' scope allows you to configure what happens when a Nextflow workflow starts.
-''')
 class OnStartConfiguration implements ConfigScope {
 
     @ConfigOption

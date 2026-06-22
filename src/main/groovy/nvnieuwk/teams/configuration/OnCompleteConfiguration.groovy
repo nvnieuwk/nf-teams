@@ -5,10 +5,6 @@ import nextflow.config.spec.ConfigScope
 import nextflow.config.spec.ScopeName
 import nextflow.script.dsl.Description
 
-@ScopeName('onComplete')
-@Description('''
-    The 'onComplete' scope allows you to configure what happens when a Nextflow workflow finishes.
-''')
 class OnCompleteConfiguration implements ConfigScope {
 
     @ConfigOption

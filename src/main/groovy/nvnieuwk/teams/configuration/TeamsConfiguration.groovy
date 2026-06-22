@@ -16,31 +16,26 @@ class TeamsConfiguration implements ConfigScope {
     ''')
     Boolean enabled
 
-    @ConfigOption
     @Description('''
         Configuration for the Microsoft Teams webhook.
     ''')
     WebHookConfiguration webHook
 
-    @ConfigOption
     @Description('''
         Configuration for notifications when the workflow completes successfully.
     ''')
     OnSuccessConfiguration onSuccess
 
-    @ConfigOption
     @Description('''
         Configuration for notifications when the workflow fails.
     ''')
     OnErrorConfiguration onError
 
-    @ConfigOption
     @Description('''
         Configuration for notifications when the workflow starts.
     ''')
     OnStartConfiguration onStart
 
-    @ConfigOption
     @Description('''
         Configuration for notifications when the workflow completes (regardless of success or failure).
     ''')

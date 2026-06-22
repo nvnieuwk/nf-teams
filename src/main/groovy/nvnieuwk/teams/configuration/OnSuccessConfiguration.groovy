@@ -5,10 +5,6 @@ import nextflow.config.spec.ConfigScope
 import nextflow.config.spec.ScopeName
 import nextflow.script.dsl.Description
 
-@ScopeName('onSuccess')
-@Description('''
-    The 'onSuccess' scope allows you to configure what happens when a Nextflow workflow completes successfully.
-''')
 class OnSuccessConfiguration implements ConfigScope {
 
     @ConfigOption
