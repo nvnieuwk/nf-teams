@@ -1,0 +1,14 @@
+[workspace]
+authors = ["Nicolas Vannieuwkerke <nicolas.vannieuwkerke@ugent.be>"]
+channels = ["conda-forge", "bioconda"]
+name = "nf-teams"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+openjdk = "21.*"
+gradle = ">=9.3.1,<10"
+prek = ">=0.4.5,<0.5"
+nextflow = ">=26.4.4,<27"
