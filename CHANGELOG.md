@@ -3,6 +3,7 @@
 ## 0.2.0
 
 1. Removed the hook URL from the log messages
+2. Fixed warnings with configuration options
 
 ## 0.1.1
 
