@@ -32,7 +32,7 @@ Paste the copied Webhook URL into your `nextflow.config` file:
 
 ```groovy
 plugins {
-    id 'nf-teams@0.1.0'
+    id 'nf-teams@0.3.0'
 }
 
 teams {
