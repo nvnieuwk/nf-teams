@@ -19,7 +19,9 @@ teams {
 }
 ```
 
-You can generate a Teams webhook url by following the instructions [here](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?tabs=newteams%2Cdotnet#create-an-incoming-webhook).
+> [!WARNING]
+> Legacy Microsoft Teams incoming webhooks (Office 365 Connectors) are deprecated by Microsoft and will stop working. You must use Microsoft Teams Workflows (powered by Power Automate) instead.
+> Refer to [MANUAL.md](file:///Users/matdsmet/Projects/nf-teams/MANUAL.md) for detailed instructions on how to set this up.
 
 To configure when notifications are sent, you can use the following configuration options:
 
