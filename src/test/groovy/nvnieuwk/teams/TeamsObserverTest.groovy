@@ -26,7 +26,7 @@ class TeamsObserverTest extends Specification {
         def result = new MockScriptRunner(config).setScript(SCRIPT).execute()
 
         then:
-        result == ""
+        result == []
     }
 
 }

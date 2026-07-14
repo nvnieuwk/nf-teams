@@ -48,7 +48,8 @@ class TeamsHookEngine {
         post.getOutputStream().write(message.getBytes("UTF-8"))
         def postRC = post.getResponseCode()
         if (postRC < 200 || postRC >= 300) {
-            log.warn(post.getErrorStream().getText())
+            def err = post.getErrorStream()
+            log.warn(err ? err.getText() : post.getResponseMessage())
         }
     }
 
