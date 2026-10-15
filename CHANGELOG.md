@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- add user ID to message templates, sourced from the environment variable `USER`
+
 ## 0.2.0
 
 1. Removed the hook URL from the log messages
