@@ -57,7 +57,7 @@
                                         {"title": "Repository", "value":"${session.workflowMetadata.repository}"},
                                         {"title": "Revision", "value":"${session.workflowMetadata.revision}"},
                                         {"title": "Commit ID", "value":"${session.workflowMetadata.commitId}"},
-                                        {"title": "User ID", "value":"${System.getenv('USER')}"},
+                                        {"title": "User ID", "value":"${session.workflowMetadata. userName}"},
                                         {"title": "Nextflow version", "value":"${session.workflowMetadata.nextflow.version}"},
                                         {"title": "Nextflow build", "value":"${session.workflowMetadata.nextflow.build}"},
                                         {"title": "Nextflow timestamp", "value":"${session.workflowMetadata.nextflow.timestamp}"}
