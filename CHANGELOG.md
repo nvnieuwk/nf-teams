@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+1. Add a summary to the teams message, this will show in the desktop notification and the summary table in MS Teams
+
 ## 0.2.1
 
 1. Add user ID to message templates, sourced from the environment variable `USER`
