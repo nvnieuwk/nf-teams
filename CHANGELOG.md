@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+1. Made the status of the run more clear in the `onComplete` default message title. It now says `Success` or `Failed` instead of `Completed`.
+
 ## 0.2.2
 
 1. Add a summary to the teams message, this will show in the desktop notification and the summary table in MS Teams
